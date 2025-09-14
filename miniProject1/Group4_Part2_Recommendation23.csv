@@ -1,0 +1,51 @@
+User ID,Item ID,Hotel ID,Hotel Name,Similarity
+User 1,140,90896,Hotel Altstadt Vienna,0.858127871
+User 1,4,31,The Harmonie Vienna  BW Premier Collection,0.840840992
+User 1,83,70993,Star Inn Hotel Salzburg Airport-Messe  by Comfort,0.84016805
+User 1,84,70993,Star Inn Hotel Salzburg Airport-Messe  by Comfort,0.84016805
+User 1,531,381887,Landhotel Stockerwirt,0.84016805
+User 1,586,503028,Sporthotel Igls,0.84016805
+User 1,587,503028,Sporthotel Igls,0.84016805
+User 1,755,7229537,AMEDIA Hotel Linz,0.84016805
+User 1,456,261557,Alpenland Sporthotel St. Johann im Pongau,0.825122952
+User 1,202,129814,Sport- und Wellnesshotel Held,0.823193209
+User 2,747,6881583,Hotel Die Residenz Superior,0.854282143
+User 2,748,6881583,Hotel Die Residenz Superior,0.840917866
+User 2,749,6881583,Hotel Die Residenz Superior,0.840917866
+User 2,746,6881583,Hotel Die Residenz Superior,0.817874635
+User 2,765,7472485,VIKTORIAS HOME,0.813539016
+User 2,321,166965,Hotel Regitnig,0.799502686
+User 2,677,1260913,Hotel Giessenbach,0.785219024
+User 2,382,183736,Hotel Zillertalerhof,0.783349452
+User 2,383,183736,Hotel Zillertalerhof,0.783349452
+User 2,456,261557,Alpenland Sporthotel St. Johann im Pongau,0.783349452
+User 3,748,6881583,Hotel Die Residenz Superior,0.83462485
+User 3,749,6881583,Hotel Die Residenz Superior,0.83462485
+User 3,747,6881583,Hotel Die Residenz Superior,0.8229512
+User 3,321,166965,Hotel Regitnig,0.818317088
+User 3,765,7472485,VIKTORIAS HOME,0.805822964
+User 3,746,6881583,Hotel Die Residenz Superior,0.786386749
+User 3,189,129684,Hotel Pragant,0.775983594
+User 3,320,166965,Hotel Regitnig,0.775983594
+User 3,322,166965,Hotel Regitnig,0.775983594
+User 3,191,129684,Hotel Pragant,0.773642144
+User 4,355,171877,Hotel Alpenhof,0.860662966
+User 4,742,6751215,Arthotel ANA Westbahn,0.860662966
+User 4,743,6751215,Arthotel ANA Westbahn,0.860662966
+User 4,140,90896,Hotel Altstadt Vienna,0.851851852
+User 4,411,239696,Flemings Selection Hotel Wien-City,0.842700972
+User 4,412,239696,Flemings Selection Hotel Wien-City,0.842700972
+User 4,413,239696,Flemings Selection Hotel Wien-City,0.842700972
+User 4,740,6751215,Arthotel ANA Westbahn,0.839921051
+User 4,741,6751215,Arthotel ANA Westbahn,0.839921051
+User 4,356,171877,Hotel Alpenhof,0.838870493
+User 5,411,239696,Flemings Selection Hotel Wien-City,0.847791248
+User 5,412,239696,Flemings Selection Hotel Wien-City,0.847791248
+User 5,413,239696,Flemings Selection Hotel Wien-City,0.847791248
+User 5,410,239696,Flemings Selection Hotel Wien-City,0.829941012
+User 5,1,31,The Harmonie Vienna  BW Premier Collection,0.797381532
+User 5,4,31,The Harmonie Vienna  BW Premier Collection,0.797381532
+User 5,21,2243,Austria Trend Hotel Europa Graz,0.797381532
+User 5,468,298167,Living Hotel Kaiser Franz Joseph by Derag,0.797381532
+User 5,469,298167,Living Hotel Kaiser Franz Joseph by Derag,0.797381532
+User 5,470,298167,Living Hotel Kaiser Franz Joseph by Derag,0.79385662

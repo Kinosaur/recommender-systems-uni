@@ -1,0 +1,26 @@
+User ID,Item ID,Hotel ID,Hotel Name,Similarity
+User1,520,368779,Hotel Kaiservilla,0.818
+User1,521,368779,Hotel Kaiservilla,0.818
+User1,584,503028,Sporthotel Igls,0.793
+User1,586,503028,Sporthotel Igls,0.793
+User1,587,503028,Sporthotel Igls,0.793
+User2,311,166942,Hotel Edelweiss,0.808
+User2,530,381887,Landhotel Stockerwirt,0.808
+User2,298,164961,Hotel Haymon,0.789
+User2,299,164961,Hotel Haymon,0.789
+User2,495,349269,Almwellness-Resort Tuffbad,0.783
+User3,296,164961,Hotel Haymon,0.714
+User3,297,164961,Hotel Haymon,0.714
+User3,405,236608,Hotel Landgasthof Gappen,0.714
+User3,406,236608,Hotel Landgasthof Gappen,0.714
+User3,748,6881583,Hotel Die Residenz Superior,0.711
+User4,520,368779,Hotel Kaiservilla,0.773
+User4,355,171877,Hotel Alpenhof,0.769
+User4,518,368779,Hotel Kaiservilla,0.769
+User4,519,368779,Hotel Kaiservilla,0.769
+User4,719,6491407,Hotel Deutschmeister,0.769
+User5,411,239696,Flemings Selection Hotel Wien-City,0.815
+User5,412,239696,Flemings Selection Hotel Wien-City,0.815
+User5,413,239696,Flemings Selection Hotel Wien-City,0.815
+User5,410,239696,Flemings Selection Hotel Wien-City,0.786
+User5,741,6751215,Arthotel ANA Westbahn,0.778
