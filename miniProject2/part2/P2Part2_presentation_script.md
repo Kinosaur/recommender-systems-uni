@@ -1,7 +1,7 @@
 
 # Item-based Nearest Neighbor (Adjusted Cosine) — Step-by-Step Presentation
 
-Hello, my name is [Your Name]. In this presentation, I will walk you through the implementation of an item-based nearest neighbor recommender system, step by step, directly aligned with the lecture slides from Week 5 and Week 6 (Collaborative Filtering, Asst. Prof. Dr. Rachsuda Setthawong).
+Hello, my name is Kino. In this presentation, I will walk you through the implementation of an item-based nearest neighbor recommender system, step by step, directly aligned with the lecture slides from Week 5 and Week 6 (Collaborative Filtering, Asst. Prof. Dr. Rachsuda Setthawong).
 
 ---
 
@@ -30,18 +30,20 @@ pivot.to_csv(OUTPUT_PATH, float_format='%.4f', na_rep='')
 
 **Code:**
 ```python
-INPUT_PATH = "../rating10user91_trainset.csv"
-OUTPUT_PATH = "P2Part2_1Profile_Group4.csv"
-df = pd.read_csv(INPUT_PATH)
+# Load, clean, and mean-center ratings
+df = pd.read_csv("../rating10user91_trainset.csv")
 df['user'] = df['user'].astype(str)
 df['item'] = df['item'].astype(str)
 df['rating'] = pd.to_numeric(df['rating'], errors='coerce')
 df = df.dropna(subset=['rating']).copy()
+
 user_mean = df.groupby('user')['rating'].mean()
 df['user_mean'] = df['user'].map(user_mean)
 df['rating_centered'] = df['rating'] - df['user_mean']
+
+# Create the user-item matrix from centered ratings
 pivot = df.pivot_table(index='user', columns='item', values='rating_centered', aggfunc='mean')
-pivot.to_csv(OUTPUT_PATH, float_format='%.4f', na_rep='')
+pivot.to_csv("P2Part2_1Profile_Group4.csv", float_format='%.4f', na_rep='')
 ```
 **Why:** This matches the "preprocessing: adjusting ratings" step in the slides, preparing for adjusted cosine similarity.
 
@@ -66,12 +68,36 @@ $$ sim(a,b) = \frac{\sum_{u \in U} (r_{u,a} - \bar r_u)(r_{u,b} - \bar r_u)}{\sq
 **Code:**
 ```python
 MIN_OVERLAP = 2
+centered_pivot = pivot 
+items = centered_pivot.columns.to_list()
+n_items = len(items)
+values = centered_pivot.values
+sim_mat = np.zeros((n_items, n_items))
+
 for i in range(n_items):
-   for j in range(i, n_items):
-      # ...existing code...
-      if c < MIN_OVERLAP or c == 0:
-         continue
-      # ...compute adjusted cosine similarity...
+    for j in range(i, n_items):
+        if i == j: continue
+        
+        # Find co-raters
+        common_mask = ~np.isnan(values[:, i]) & ~np.isnan(values[:, j])
+        if common_mask.sum() < MIN_OVERLAP:
+            continue
+            
+        # Get centered ratings of co-raters
+        vi_c = values[common_mask, i]
+        vj_c = values[common_mask, j]
+        
+        # Compute adjusted cosine similarity
+        num = np.dot(vi_c, vj_c)
+        denom = np.sqrt(np.dot(vi_c, vi_c)) * np.sqrt(np.dot(vj_c, vj_c))
+        
+        if denom != 0:
+            sim = num / denom
+            sim_mat[i, j] = sim
+            sim_mat[j, i] = sim
+
+sim_df = pd.DataFrame(sim_mat, index=items, columns=items)
+sim_df.to_csv("P2Part2_2Model_Group4.csv", float_format="%.6f")
 ```
 **Why:** This implements the adjusted cosine similarity as described in the slides.
 
@@ -92,12 +118,32 @@ $$ \hat r_{u,p} = \frac{\sum_{i \in \text{RatedItems}(u)} sim(i,p) \cdot r_{u,i}
 
 **Code:**
 ```python
-USE_ABS_IN_DENOM = False      # denominator = sum(sim)
-INCLUDE_NEGATIVE_SIMS = False # only positive, most similar
-TOP_K_NEIGHBORS = 50          # cap neighbors per item
-TOP_N = 10                    # recommendations per user
-CLIP_MIN, CLIP_MAX = 1.0, 10.0
-# ...existing code for predict_for_user...
+def predict_for_user(user_id):
+    rated_pairs = user_ratings.get(user_id, [])
+    rated_items = {it for it, _ in rated_pairs}
+    candidates = all_items - rated_items
+    
+    num, denom = {}, {}
+    
+    # For each rated item, propagate to candidate items via its neighbors
+    for i, r_ui in rated_pairs:
+        for j, sim_val in item_neighbors.get(i, []):
+            if j in candidates:
+                num[j] = num.get(j, 0.0) + sim_val * r_ui
+                denom[j] = denom.get(j, 0.0) + sim_val
+    
+    # Compute predictions, falling back to user mean
+    preds = []
+    u_mean = user_mean.get(user_id, global_mean)
+    for j in candidates:
+        if j in num and denom.get(j, 0) != 0:
+            pred = num[j] / denom[j]
+        else:
+            pred = u_mean # Fallback
+        preds.append((j, pred))
+    
+    preds.sort(key=lambda x: (-x[1], x[0]))
+    return preds
 ```
 **Why:** This matches the lecturer's formula and neighbor selection policy.
 
@@ -118,6 +164,20 @@ $$ RMSE = \sqrt{\frac{1}{N} \sum_{i=1}^N (x_i - \hat x_i)^2 } $$
 **Code:**
 ```python
 from math import sqrt
+
+records = []
+# Group test rows by user to avoid recomputing predictions repeatedly
+for user, group in test_df.groupby("user"):
+    preds_dict = dict(predict_for_user(user))
+    u_mean = user_mean.get(user, global_mean)
+
+    for _, r in group.iterrows():
+        item, actual = str(r["item"]), float(r["rating"])
+        pred = preds_dict.get(item, u_mean) # Predict or fallback
+        records.append((user, item, actual, pred))
+
+# Compute RMSE
+pred_df = pd.DataFrame(records, columns=["user", "item", "actual_rating", "predicted_rating"])
 mse = ((pred_df["actual_rating"] - pred_df["predicted_rating"]) ** 2).mean()
 rmse = sqrt(mse)
 ```
